@@ -1,0 +1,462 @@
+脚本立即执行
+wautorun@PATA:~/qa/web/projects/cron$ ./cronCheckQueueForIAP
+
+主机未安装sz，需要先发送到其他主机
+scp rerun root@10.65.102.21:/home/bwang/    password itsabug
+
+sql服务器
+wautorun@PATA:~$ cd qa/web/projects/
+mysql -uroot -p123456
+mysql> use autoSmoke;
+mysql> show tables;
+select * from components where categoryid=20;
+web页面存放位置：
+wautorun@PATA:~/qa/web/projects/autoweb/beimain$ ls
+debug相关
+9c:1c:12:cb:ad:8e# debug pkt type tcp
+9c:1c:12:cb:ad:8e# debug pkt ip 192.168.30.251
+9c:1c:12:cb:ad:8e# debug pkt match ip 
+9c:1c:12:cb:ad:8e# debug pkt dump 
+
+查找之前的queue记录
+wautorun itsabug
+wautorun@PATA:~$ 
+wautorun@PATA:~$ mysql -uroot -p123456 autoSmoke;
+select * from queue limit 1;where testbed="TB:iap_flat_155" and build="OB:6.4.2.3-4.1.1.2_47866";
+
+执行所有rerun中fail测试例（log目录）
+prun -suite /home/instantauto/qa/ate/run/instantauto/6.4.3.0/47708/141219/045959.494/rerun -testbed iap_flat_277 -FILE.COMPLETED yes -CACHE.ENABLED no -DB.CURRENT pata -DB.QUEUEID 13471 -DB.RESULTS yes -PATA_IMAGE 6.4.3.0-4.1.2.0_47708 -TFTP_BUILD_SERVER 10.1.1.41
+
+telnet中断后恢复方法：
+pata-ubuntu-instantauto-autoinfr-Dot1x:) screen -ls
+There is a screen on:
+        6809.pts-105.ubuntu     (Friday, December 19, 2014 09:49:42 CST)        (Detached)
+1 Socket in /var/run/screen/S-instantauto.
+instantauto@ubuntu:~$ screen -r  6809                                                                               
+                                                                           
+
+release版本库
+\\10.64.96.36\qa\InstantTeam\releaseBuilds	
+
+
+AMP配置：
+24:de:c6:cb:18:fe (config) # organization 
+% Incomplete command.
+
+24:de:c6:cb:18:fe (config) # ams-ip ?
+<name>     ip address or domain name
+
+24:de:c6:cb:18:fe (config) # ams-ip 1.1  
+24:de:c6:cb:18:fe (config) # ams-key 1111
+24:de:c6:cb:18:fe (config) # en 
+% Incomplete command.
+
+24:de:c6:cb:18:fe (config) # end
+24:de:c6:cb:18:fe# commit apply 
+
+
+查看并下载AP的core文件
+AP cli下进入su模式
+support password: S1erraOn#
+~ # cd /etc/httpd/core/
+/etc/httpd/core # ls
+core.19700101_123005.94b40fcabc20.mdns.2464.Centaurus_47853.tgz   core.19700101_123332.94b40fcabc20.mdns.28973.Centaurus_47853.tgz
+
+/etc/httpd/core # tftp -l core.19700101_123005.94b40fcabc20.mdns.2464.Centaurus_47853.tgz -p 192.168.72.2
+ Interoperate test between different IAP type.
+
+导入文件到AP
+tftp 192.168.72.2 -r strace.powerpc -g
+
+tftp 192.168.72.2 -l core.20141231_081034.aca31ec039b6.cli.2538.Centaurus_47853.tgz -p
+
+/home/instantauto/qa/ate/run/instantauto/0.0.0.0/99999/150103/193938.291/20150103193938_PL1_iap_img_sync.log
+
+更改AP countrycode
+首先计算国家码
+AP boot下mfginfo命令查看seril号：之后通过CC计算国家码
+c:\CC>genccode.exe US-DM0000044
+  ccode=CCODE-US-1259c551f803abfa1a0e63e4be7a114e65d64cac
+  output image: ccode64k.bin
+boot下执行：
+purgeenv 
+proginv system ccode xxx
+invent -w 
+boot 
+
+从印度服务器取脚本到本地：
+scp ClientAware.tst root@10.65.102.21:/home/instantauto/qa/automation/autoinfr/pata/tests/INSTANTAP/WLAN/ARM
+密码：itsabug
+
+convia升级：
+copy tftp: 10.65.102.31 ArubaOS_MAS_7.3.2.1_44458 system: partition 0
+
+
+查看core
+interpreter
+nvijayakumar@instant-patablr:~/autoResults/autoinfr/run/nightly/6.4.2.3/48114/150116/200140.424$ grep -r "kernel p" *
+nvijayakumar@instant-patablr:~/autoResults/autoinfr/run/nightly/6.4.2.3/48114/150116/200140.424$ grep -r "Core" * 
+
+临时版本升级
+ftp 10.20.23.131
+ftp> bin 
+200 Switching to Binary mode.
+ftp> hash
+Hash mark printing on (1024 bytes/hash mark).
+ftp> get ArubaInstant_Centaurus_6.4.3.0-4.1.2.0.vamsi_i4.1_1
+
+ftp> prompt 
+Interactive mode off.
+ftp> mget *.*
+
+[root@arsenic ~]# crontab -l  查看
+[root@arsenic ~]# crontab -e  修改
+
+
+band 问题
+        set result [COMMAND $SWARM(MASTER) {show ap bss-table}]
+        if {[regexp -line ".*phy.*" $result index]} {
+                set band_index [lsearch $index "phy"]
+        }
+        if {[regexp -line ".*$ssid.*a.*" $result match]} {
+           INFO "BAND is [lindex $match $band_index]"
+           set BAND [lindex $match $band_index]
+        } else {
+                set BAND "g"
+        }
+或者：
+set output_show_ap_bss_table [COMMAND $SWARM(MASTER) "show ap bss-table"]
+
+	if {[regexp "Dell AP BSS Table" $output_show_ap_bss_table]} {
+		set title "Dell_AP_BSS_Table"
+	} elseif {[regexp "Alcatel-Lucent AP BSS Table" $output_show_ap_bss_table]} {
+		set title "Alcatel-Lucent_AP_BSS_Table"
+	} else {
+		set title "Aruba_AP_BSS_Table"
+	}
+	set output [ARUBA::parse $output_show_ap_bss_table]
+	array set temp $output
+	set BAND $temp($title,phy,0)
+	set GBAND $temp($title,phy,1)
+
+	if {[regexp "g" $BAND]} {
+		set BAND $temp($title,phy,1)
+		set GBAND $temp($title,phy,0)
+	}	
+
+monitor mode 
+9c:1c:12:cb:ae:98# wifi0-mode monitor
+9c:1c:12:cb:ae:98# sho ap-env
+
+Antenna Type:Internal
+wifi0_mode:monitor
+9c:1c:12:cb:ae:98# wifi0-mode 0
+
+测试认证服务器是否可达
+aaa test-server ReachableExternalRadiusServer username fengding password fengding auth-type pap
+
+radius服务器开启testbed认证进程（以205h为例）
+radiusd-p-iap-flat-205h -d /usr/local/etc/raddb-p-iap-flat-205h -X
+
+所有文件中查找关键字
+grep ConfigurableESSID *
+
+Verified in 4.2.2.0 build 53034
+
+Verified in 4.2.2.0 build 53001
+
+版本库
+\\pekdfs01\QA\InstantTeam\releaseBuilds?(file://pekdfs01/QA/InstantTeam/releaseBuilds)
+
+actRadio  swarm.lib #模式修改radio参数
+
+SOFTWARE.img_list {6.4.3.1-4.2.0.0_51112,6.4.0.2-4.1.0.0_44004,6.3.1.1-4.0.0.0_40930}
+
+3.2/3.3
+http://10.65.102.21/cgi-bin/viewlogs.cgi?file=/home/instantauto/qa/ate/run/instantauto/6.4.2.6/49669/150422/130719.220//iap_img_upgrade.tst.1.1/20150422130742_PL1_iap_img_upgrade.log#ANCHQ_28
+
+3.4
+http://10.65.102.21/cgi-bin/viewlogs.cgi?file=/home/instantauto/qa/ate/run/instantauto/6.4.2.6/49669/150423/102618.49//iap_img_upgrade.tst.1.1/20150423102633_PL1_iap_img_upgrade.log#ANCHI_0
+
+
+
+
+
+
+
+wautorun@PATA:~/qa/web/projects/report$ php automation_process_report.php 
+
+http://10.65.102.22/report/automation_process_report.html
+
+megort
+https://margot.arubanetworks.com/margot/index.php/Automation_suite
+
+https://margot.arubanetworks.com/margot/index.php/Automation_result
+https://margot.arubanetworks.com/margot/index.php/Aruba_Instant#Automation_Result
+
+
+10.65.102.56 4013 已坏
+205——2-IAP1  56:4013 ---->  51:4029
+
+
+nightly
+1.
+
+[root@arsenic ~]# crontab -l  ---->查看
+#30 19 * * 1-4 /usr/local/bin/nightlyrunning.sh &
+#0 23 * * * /usr/local/bin/titansmokerunning.sh &
+#30 18 * * 5 /usr/local/bin/weeklyrunning.sh &
+#0 18 * * * /var/arsenic/arsenic_backup/backup.sh &
+0 9 * * * /usr/local/bin/nightly_diff.sh &
+#0 9 * * 1 /root/bugzillia_tool/defect_trend.sh &
+#* * * * * /usr/local/bin/sync_to_tftp > /dev/null 2>&1
+#0 23 * * * /usr/local/bin/movadosmokerunning.sh &
+#15 23 * * * /usr/local/bin/movadosanityrunning.sh &
+#30 23 * * * /usr/local/bin/movadosmokerunning-rap3.sh &
+#0 23 * * * /usr/local/bin/GetLatestBuild.sh wenger > /dev/null &
+#15 23 * * * /usr/local/bin/wengersmokerunning.sh &
+#30 23 * * * /usr/local/bin/wengersmokerunning-rap3.sh &
+#00 20 * * * /usr/local/bin/pata_nightly_running 6.4.3.0-4.2.0.0 IAP4.1 > /dev/null &------------------->修改版本号
+#30 01 * * * /usr/local/bin/iap_performance > /dev/null &
+
+crontab -e ---------->修改
+
+2.cd /usr/local/bin/  修改pata_nightly_running选择需要run的testbed
+3.手动执行nightly ./pata_nightly_running 6.4.3.0-4.2.0.0 IAP4.2
+
+
+
+ifconfig 是否有ppp0
+sudo sh /etc/ppp/pppoe_stop 220
+sudo sh /etc/ppp/pppoe_start 220
+
+netsh wlan show interface============>查看无线网卡GUID
+netsh interface ipv4 show interfaces interface="Wireless Network Connection ==========》查看无线网卡ifindex
+
+
+syslog-level debug
+syslog-level debug user
+syslog-level debug user-debug
+
+
+hp
+corvina 5 22 23 24
+console 10.65.102.53 4010 4011 4012
+
+重启USB_Console 
+ /etc/init.d/ser2net restart\
+
+
+
+
+backup restore and configuration
+增加components 
+
+
+mysql> insert into components(component,productID,categoryID) values('Customer_bug',5,32);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from  components where categoryID=32;                                     
++------------------------------+-----------+-------------+------------+--------+--------+--------+
+| component                    | productID | componentID | categoryID | sqaOwn | devOwn | autOwn |
++------------------------------+-----------+-------------+------------+--------+--------+--------+
+| ALG,ACL option and blacklist | 5         |         310 | 32         | NULL   | NULL   | NULL   |
+| ACL reorg on IAP             | 5         |         311 | 32         | NULL   | NULL   | NULL   |
+| ARP attacks protect          | 5         |         312 | 32         | NULL   | NULL   | NULL   |
+| Firewall Bypass              | 5         |         313 | 32         | NULL   | NULL   | NULL   |
+| Destination NAT              | 5         |         314 | 32         | NULL   | NULL   | NULL   |
+| VLAN pooling                 | 5         |         315 | 32         | NULL   | NULL   | NULL   |
+| Customer_bug                 | 5         |         340 | 32         | NULL   | NULL   | NULL   |
++------------------------------+-----------+-------------+------------+--------+--------+--------+
+7 rows in set (0.00 sec)
+
+更新launchserver
+UPDATE testbeds SET launchServerID=24 WHERE platformTypeID=77;
+
+packet builder
+
+
+
+/home/instantauto/qa/ate/run/instantauto/0.0.0.0/99999/150617/100143.398/20150617100143_PL1_Multi_XML_API32.log
+
+
+HP support 103 115 205 225
+
+
+proc RandomRangeInt { min max } {
+	set rd [expr rand()]
+	set result [expr int([expr $rd*($max -$min) + $min])]
+	return $result
+}
+
+proc RandomIntNum { min max count} {
+	set RandomIntList ""
+	set index 0
+	while { $index < $count} {
+		set radomNum [RandomRangeInt $min $max]
+		if {[lsearch $RandomIntList $radomNum] == -1} {
+			lappend RandomIntList $radomNum
+			incr index
+		}	
+	}
+	return $RandomIntList	
+}
+
+
+暂停技术
+
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$ ps ax|grep iap_flat_115
+7032 ?        Sl     1:08 /usr/bin/expect -- /home/instantauto/qa/automation/autoinfr/pata/tests/INSTANTAP/WLAN/DFS/DFS.tst -testbed iap_flat_115 -FILE.COMPLETED yes -CACHE.ENABLED no -DB.CURRENT pata -DB.QUEUEID 16399 -DB.RESULTS yes -PATA_IMAGE 6.4.2.6-4.1.1.7_50093 -TFTP_BUILD_SERVER 192.168.72.2
+7065 ?        S      0:00 /usr/bin/expect -- /home/instantauto/qa/automation/autoinfr/pata/tests/INSTANTAP/WLAN/DFS/DFS.tst -testbed iap_flat_115 -FILE.COMPLETED yes -CACHE.ENABLED no -DB.CURRENT pata -DB.QUEUEID 16399 -DB.RESULTS yes -PATA_IMAGE 6.4.2.6-4.1.1.7_50093 -TFTP_BUILD_SERVER 192.168.72.2
+19199 ?        Ss     0:00 sh -c prun -suite regression_instant.suite -reloadArgs "-OEM Null"  -testbed iap_flat_115 -cache.enabled no -DB.QUEUEID 16399 -DB.CURRENT pata -DB.RESULTS yes -PATA_IMAGE 6.4.2.6-4.1.1.7_50093 -TFTP_BUILD_SERVER 192.168.72.2  -reload yes
+19305 ?        Sl     0:41 /usr/bin/expect -- /home/instantauto/qa/automation/autoinfr/pata/infra/bin/prun -suite regression_instant.suite -reloadArgs -OEM Null -testbed iap_flat_115 -cache.enabled no -DB.QUEUEID 16399 -DB.CURRENT pata -DB.RESULTS yes -PATA_IMAGE 6.4.2.6-4.1.1.7_50093 -TFTP_BUILD_SERVER 192.168.72.2 -reload yes
+
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$kill -19 19199 
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$kill -19 19305 
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$kill -9 7032 
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$kill -9 7065
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$kill -18 19199 
+instantauto@BJPATA1:~/qa/automation/autoinfr/pata/infra/lib/tcl$kill -18 19305
+
+
+
+SOFTWARE.master_ap_list {INSTANTAP23,INSTANTAP103,INSTANTAP104,INSTANTAP109,INSTANTAP114,INSTANTAP134,INSTANTAP224,INSTANTAP155,INSTANTAP275,INSTANTAP175,INSTANTAP215,INSTANTAP205}
+
+
+kill 某个平台
+ps -ef | grep "iap_flat_205" | awk '{print $2}' | xargs kill -9
+
+
+
+html:
+set yj2 [open "D:/wired_performance_summary.html" w+]
+puts $yj2 "<table border=\"3\">"
+puts $yj2 "< tr BGCOLOR=DarkGray><td>4.1.1.X</td><td>4.2.x.x</td</tr>"
+puts $yj2 "< tr BGCOLOR=DarkGray><td>1111</td></tr>"
+puts $yj2 "</table>"
+flush $yj2
+close $yj2
+
+csv:
+set yj [open $reports_path/compared_result_103.csv w+]
+    puts $yj "Country Code,Result,Supported or Not,-->,Country Code,Result,Supported or Not"
+close $yj
+
+
+netsh wlan>delete profile name=* interface="Wireless Network Connection"
+
+
+[2015/8/14 15:55] Zhiwang Li: 
+set res [COMMAND LAPTOP1 {wget -O - http://www.baidu.com}]
+if {[regexp {sohi.} $res]} {}
+
+
+USB console:
+readme:
+/usr/local/bin
+Edit /etc/ser2net.conf
+sudo /etc/init.d/ser2net restart
+
+[2015/9/23 16:06] Dapeng Li: 
+terryinzaghi@163.com
+
+
+set random [expr int(rand()*[llength $DFS_CHANNEL_LIST])]
+
+[2015/10/29 14:27] Feng Ding: 
+radiusd -d /usr/local/etc/raddb-p-iap-flat-385-bak -X 查看进程启动过程
+[2015/10/29 14:28] Feng Ding: 
+netstat -nap | grep 9008 查看占用9008的进程
+
+set fips_certified 1
+
+
+show crypto isakmp sa 
+
+tcpdump -i eth0 port 8121 -n
+
+dump抓包并保存
+tcpdump  -i eth2.1102 -n -s 0 -w 103.pcap -s 0
+
+cronCheck打开的数据库连接太多导致数据库访问变慢，kill所有打开的连接
+ps -ef | grep cronCheckQueueForIAP | grep -v grep | awk '{print $2}' | xargs kill -9
+
+
+/home/instantauto/qa/ate/run/instantauto/0.0.0.0/99999/151210/170358.400/20151210170358_PL1_pppoe_negative.log
+
+
+workday 1234qwerASDF!
+
+
+Employee ID	35005557
+Domain Name	ASIAPACIFIC
+Domain User ID	liuyunj
+@HPE.com email address	yunjie.liu@hpe.com
+
+HPE Password	pan.car-33
+
+
+\\pekdfs01\share\other\Official software
+
+
+ps -ef | grep cp_add |grep -v grep | cut -c 9-15 | xargs kill -9
+ps -e | grep pppd | grep -v 'grep' | awk '{ print $1 }'
+
+/home/instantauto/qa/ate/run/instantauto/0.0.0.0/99999/160321/133547.464/20160321133547_PL1_Dell-OEM.logw
+
+FESCO HELLO
+唯一号5960459
+user dongxinjv
+password Aruba123!
+
+
+activate password : arubatest
+
+
+
+ubuntu 添加路由：
+先关掉network manager。
+然后，在
+/etc/network/interfaces 文件中设定
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.10.2
+netmask 255.255.255.0
+broadcast 192.168.10.255
+network 192.168.10.0
+gateway 192.168.10.1
+
+按你自己的静态IP和其他数据，改掉我给的例子中的数据。
+sudo /etc/init.d/networking restart
+
+
+
+client 删除arp无法通过CP automation  BUG138514
+mixed_network脚本整合
+img_upgrade脚本修改
+configuration_migration脚本修改
+intergrate zhiwang/yaohua script
+
+
+[2016/5/3 16:26] Jin, Pengfei: debug 模式开启radius
+radiusd-p-iap-flat-325 -d /usr/local/etc/raddb-p-iap-flat-325  -X
+
+替换iap_platform.dev中19->202
+sed -i 's/10.65.10.19/10.65.10.202/g' iap_platform.dev
+
+
+http://10.65.10.26/queue/smokeruns.php?queueID=22522  img_sync 4.3
+
+
+
+service apache2 start
+
+ {INSTANTAP23,INSTANTAP103,INSTANTAP105,INSTANTAP109,INSTANTAP115,INSTANTAP135,INSTANTAP225,INSTANTAP155,I
+    NSTANTAP275,INSTANTAP175,INSTANTAP215,INSTANTAP205,INSTANTAP205H,INSTANTAP325,INSTANTAP277,INSTANTAP228,INSTANTAP315,INSTANTAP335}
+
+
+指定位置插入
+find . | xargs grep -il 'ALE_SERVER' | xargs sed -i '/ALE_SERVER/a\??????? ALE_SERVER2'?
